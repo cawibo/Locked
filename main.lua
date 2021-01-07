@@ -22,18 +22,19 @@ mod.frame:SetPoint("TOPLEFT", CharacterFrame, "TOPRIGHT")
 mod.frame:SetScript("OnShow",
     function(self, event)
         for i, val in pairs(mod.dungeonNames) do
-            local locked
+            local name, locked, isFound
             for ii=1, GetNumSavedInstances() do
-                local name = GetSavedInstanceInfo(ii)
+                name, _, _, _, locked = GetSavedInstanceInfo(ii)
                 if val == name then
-                    locked = true
+                    isFound = true
+                    break
                 end
             end
             
             local s = mod.frame:CreateFontString()
             s:SetFontObject(GameFontNormalLarge)
             s:SetPoint("TOPLEFT", 10, 10 -  i*20)
-            s:SetText('|cffffff00' .. val .. '|r   |cffff0000' .. (locked and 'locked' or '') .. '|r')
+            s:SetText('|cffffff00' .. val .. '|r   |cffff0000' .. (isFound and locked and 'locked' or '') .. '|r')
         end
     end
 )
